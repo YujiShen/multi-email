@@ -36,6 +36,11 @@ with open(message_file) as f:
                 formatted_message_html = message_html.format(**contact)
                 content = MIMEText(formatted_message_html, "html")
                 message.attach(content)
-                server.sendmail(
-                    sender_alias_email, recipient_email, message.as_string()
-                )
+                try:
+                    server.sendmail(
+                        sender_alias_email, recipient_email, message.as_string()
+                    )
+                    print("Sent to: {recipient_email}".format(recipient_email=recipient_email))
+                except Exception as e:
+                    # Print any error messages to stdout
+                    print(e)
